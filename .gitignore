@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+data/raw/*.gz
+data/raw/*.part
+data/processed/*.db
+data/processed/hourly.csv
+data/processed/hourly.parquet
+output/
+tmp/
+qa/
+*.log

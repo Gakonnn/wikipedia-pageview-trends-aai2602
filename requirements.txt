@@ -1,0 +1,11 @@
+numpy==2.3.5
+pandas==2.2.3
+pyarrow==26.0.1
+matplotlib==3.11.2
+plotly==7.1.0
+statsmodels==0.15.0
+scikit-learn==1.9.1
+streamlit==1.67.0
+requests==2.34.2
+reportlab==4.4.9
+psutil==7.2.2
