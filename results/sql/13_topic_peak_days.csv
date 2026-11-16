@@ -1,0 +1,56 @@
+language,topic,date,views,times_mean,peak_rank
+en,Almaty,2025-08-26,13451,8.17,1
+en,Almaty,2025-08-27,9759,5.93,2
+en,Almaty,2025-09-30,9666,5.87,3
+en,Artificial intelligence,2025-01-28,21977,2.06,1
+en,Artificial intelligence,2025-01-29,20590,1.93,2
+en,Artificial intelligence,2025-01-30,18946,1.78,3
+en,Astana,2025-08-26,3454,2.36,1
+en,Astana,2025-09-04,3191,2.18,2
+en,Astana,2025-08-27,2956,2.02,3
+en,Internet,2025-12-08,21670,5.25,1
+en,Internet,2025-12-12,20509,4.97,2
+en,Internet,2025-12-09,17882,4.33,3
+en,Kazakhstan,2025-09-30,17754,2.38,1
+en,Kazakhstan,2025-08-26,16565,2.22,2
+en,Kazakhstan,2025-11-07,15752,2.11,3
+en,Python,2025-06-06,15718,3.89,1
+en,Python,2025-06-07,7883,1.95,2
+en,Python,2025-02-05,6140,1.52,3
+kk,Almaty,2025-04-22,322,3.14,1
+kk,Almaty,2025-02-20,317,3.09,2
+kk,Almaty,2025-02-24,291,2.84,3
+kk,Artificial intelligence,2025-09-03,336,3.29,1
+kk,Artificial intelligence,2025-09-04,333,3.26,2
+kk,Artificial intelligence,2025-09-10,333,3.26,2
+kk,Artificial intelligence,2025-02-03,322,3.16,3
+kk,Astana,2025-11-04,831,6.21,1
+kk,Astana,2025-12-03,655,4.89,2
+kk,Astana,2025-04-22,645,4.82,3
+kk,Internet,2025-02-03,300,8.98,1
+kk,Internet,2025-04-15,189,5.66,2
+kk,Internet,2025-02-02,188,5.63,3
+kk,Kazakhstan,2025-09-02,993,3.27,1
+kk,Kazakhstan,2025-02-19,813,2.68,2
+kk,Kazakhstan,2025-02-13,768,2.53,3
+kk,Python,2025-01-16,292,7.71,1
+kk,Python,2025-01-15,279,7.36,2
+kk,Python,2025-01-21,262,6.92,3
+ru,Almaty,2025-09-30,3286,2.18,1
+ru,Almaty,2025-08-27,2424,1.61,2
+ru,Almaty,2025-08-28,2283,1.52,3
+ru,Artificial intelligence,2025-01-29,4380,2.1,1
+ru,Artificial intelligence,2025-01-28,4342,2.08,2
+ru,Artificial intelligence,2025-01-30,3778,1.81,3
+ru,Astana,2025-12-10,3340,2.35,1
+ru,Astana,2025-03-04,2430,1.71,2
+ru,Astana,2025-07-06,2206,1.55,3
+ru,Internet,2025-01-14,2122,2.51,1
+ru,Internet,2025-01-15,1584,1.87,2
+ru,Internet,2025-03-20,1572,1.86,3
+ru,Kazakhstan,2025-11-12,5417,1.59,1
+ru,Kazakhstan,2025-01-03,4664,1.37,2
+ru,Kazakhstan,2025-01-23,4597,1.35,3
+ru,Python,2025-02-28,1491,1.99,1
+ru,Python,2025-02-25,1489,1.98,2
+ru,Python,2025-01-23,1459,1.94,3

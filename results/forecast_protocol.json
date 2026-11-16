@@ -3,11 +3,18 @@
   "validation": "2025-10-01..2025-11-30",
   "test": "2025-12-01..2025-12-31",
   "horizon": "rolling one day ahead; past actual observations available",
-  "refit": "linear model fitted on train for validation, train+validation for test",
-  "metric": "MAE in views/day, compare methods within each language",
+  "refit": "learned models fitted on train for validation, train+validation for test",
+  "methods": [
+    "naive",
+    "seasonal_naive",
+    "moving_average_7",
+    "linear_regression",
+    "gradient_boosting"
+  ],
+  "metric": "MAE in views/day (selection), plus RMSE, MAPE % and MASE (scale: in-sample seasonal naive MAE)",
   "memory": "tracemalloc peak Python allocations; excludes most native-library memory",
   "selection": {
-    "en": "linear_regression",
+    "en": "gradient_boosting",
     "kk": "linear_regression",
     "ru": "linear_regression"
   }

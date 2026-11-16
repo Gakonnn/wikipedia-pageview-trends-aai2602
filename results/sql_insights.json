@@ -1,0 +1,37 @@
+{
+  "weekend_to_weekday": {
+    "kk": 0.6374,
+    "en": 1.03,
+    "ru": 1.0414
+  },
+  "half_year_pct": {
+    "en": 51.016,
+    "kk": 56.918,
+    "ru": 53.042
+  },
+  "monthly_leaders": [
+    {
+      "language": "en",
+      "topic": "Artificial intelligence",
+      "months_at_rank_1": 12
+    },
+    {
+      "language": "kk",
+      "topic": "Kazakhstan",
+      "months_at_rank_1": 12
+    },
+    {
+      "language": "ru",
+      "topic": "Kazakhstan",
+      "months_at_rank_1": 12
+    }
+  ],
+  "highest_relative_interest": {
+    "Almaty": "kk",
+    "Artificial intelligence": "kk",
+    "Astana": "kk",
+    "Internet": "kk",
+    "Kazakhstan": "kk",
+    "Python": "kk"
+  }
+}

@@ -7,7 +7,7 @@
   "max_optimized_chunk_bytes": 11935188,
   "hour_end_utc": "2025-10-01T12:00:00Z",
   "hour_start_utc": "2025-10-01T11:00:00Z",
-  "processing_seconds": 10.883601292000094,
+  "processing_seconds": 15.116229900042526,
   "gzip_bytes": 60828176,
   "parquet_bytes": 30225846
 }

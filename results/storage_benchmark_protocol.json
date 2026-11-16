@@ -10,6 +10,7 @@
   },
   "quality": "Exact equality of language/access sums",
   "timing": "read+groupby only; excludes imports and process startup; uncontrolled OS cache",
-  "memory": "fresh-process peak RSS including Python and imports",
+  "memory": "fresh-process peak RSS including Python and imports (Windows: psutil peak working set)",
+  "platform": "win32",
   "size_note": "SQLite includes normalized tables, indexes and daily data"
 }

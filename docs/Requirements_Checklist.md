@@ -10,16 +10,16 @@
 | try / except | acquisition, safe database rebuild, console errors |
 | interactive interface | Streamlit filters, page search, SQL selector, CSV download; console menu |
 | modularity / standard library | 7 package modules, pathlib, json, sqlite3, datetime, subprocess |
-| baseline + 2 approaches | naive + moving average + regression; extra seasonal naive; CSV/Parquet/SQLite benchmark |
-| SQL | 7 normalized tables, ER diagram, ten queries including JOIN, HAVING, CTE, windows |
+| baseline + 2 approaches | naive + moving average + linear regression + gradient boosting; extra seasonal naive; MAE/RMSE/MAPE/MASE; six-fold rolling-origin backtest; CSV/Parquet/SQLite benchmark |
+| SQL | 7 normalized tables, ER diagram, fifteen queries including JOIN, HAVING, CTE, ROW_NUMBER/RANK/DENSE_RANK/LAG, SUM/AVG OVER; results of queries 11, 12, 14, 15 used in `sql_insights()` |
 | large data | 6,787,398 source rows, 2,723,008 filtered rows; chunked processing |
 | EDA | data audits, types, describe, IQR flags and boxplots |
 | time series | daily series, monthly resample, rolling mean, weekly robust STL |
 | correlation | Pearson levels heatmap plus change correlations |
-| 4-5 charts incl interactive | 7 static PNG figures, Plotly HTML and interactive dashboard |
+| 4-5 charts incl interactive | 9 static PNG figures, Plotly HTML and interactive dashboard (incl. forecast explorer) |
 | SQLite cleaned data | all filtered hourly and all daily observations in normalized tables |
 | forecast MAE | chronological train/validation/test, next-day evaluation per language |
-| time and memory | three-run storage benchmark; forecast time and Python allocation peak |
+| time and memory | three-run storage benchmark (Windows/macOS/Linux); forecast time and Python allocation peak |
 | requirements | exact library versions in requirements.txt |
 | report | output/pdf/Final_Project_Wikipedia_Trends_AAI-2602_Report.pdf |
 | presentation | saved presentation, downloadable PPTX from viewer |
