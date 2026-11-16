@@ -64,9 +64,33 @@ with tabs[2]:
 with tabs[3]:
     st.caption('Фиксированный эксперимент: обучение январь–сентябрь, validation октябрь–ноябрь, test декабрь. Фильтры периода и категории не меняют протокол.')
     metrics=pd.read_csv(RESULTS/'forecast_metrics.csv')
-    st.dataframe(metrics[metrics.language.isin(languages)],width='stretch',hide_index=True)
-    st.image(str(RESULTS/'figures/06_forecasts.png'))
-    st.info('Каждый прогноз на один день вперёд использует известные предыдущие дни. Это не прогноз всего декабря из одной точки.')
+    predictions=pd.read_csv(RESULTS/'forecast_predictions.csv',parse_dates=['date'])
+    selection=json.loads((RESULTS/'forecast_protocol.json').read_text(encoding='utf-8'))['selection']
+    columns=st.columns(3)
+    forecast_lang=columns[0].selectbox('Язык прогноза',languages)
+    split=columns[1].radio('Выборка',['test','validation'],horizontal=True)
+    all_methods=list(metrics.method.unique())
+    chosen=columns[2].multiselect('Методы',all_methods,default=sorted({'naive',selection[forecast_lang]}))
+    shown=predictions[(predictions.language==forecast_lang)&(predictions.split==split)&predictions.method.isin(chosen)]
+    actual=shown.drop_duplicates('date')[['date','actual']].rename(columns={'actual':'value'}).assign(series='actual')
+    lines=pd.concat([actual,shown.rename(columns={'predicted':'value','method':'series'})[['date','value','series']]])
+    st.plotly_chart(px.line(lines,x='date',y='value',color='series',markers=True,
+        labels={'value':'Просмотры/день','date':'Дата','series':'Ряд'},
+        title=f'{forecast_lang.upper()}: прогноз на день вперёд ({split}); выбран по validation: {selection[forecast_lang]}'),width='stretch')
+    table=metrics[(metrics.language==forecast_lang)&(metrics.split==split)][['method','mae','rmse','mape','mase','seconds','selected_on_validation']]
+    st.dataframe(table.sort_values('mae'),width='stretch',hide_index=True)
+    st.info('Каждый прогноз на один день вперёд использует известные предыдущие дни. Это не прогноз всего декабря из одной точки. MASE < 1 означает лучше, чем недельный naive на обучающих данных.')
+    if (RESULTS/'forecast_backtest_summary.csv').exists():
+        st.subheader('Проверка устойчивости: 6 месячных фолдов (июль–декабрь)')
+        backtest=pd.read_csv(RESULTS/'forecast_backtest.csv')
+        st.plotly_chart(px.line(backtest[backtest.language==forecast_lang],x='fold',y='mase',color='method',markers=True,
+            labels={'fold':'Месяц','mase':'MASE','method':'Метод'}),width='stretch')
+        summary=pd.read_csv(RESULTS/'forecast_backtest_summary.csv')
+        st.dataframe(summary[summary.language==forecast_lang].sort_values('mean_mae'),width='stretch',hide_index=True)
+    if (RESULTS/'forecast_errors_by_weekday.csv').exists():
+        errors=pd.read_csv(RESULTS/'forecast_errors_by_weekday.csv')
+        st.caption('Анализ ошибок выбранного метода на test по дням недели')
+        st.dataframe(errors[errors.language==forecast_lang],width='stretch',hide_index=True)
 with tabs[4]:
     queries=load_queries();name=st.selectbox('Сохранённый SQL-запрос',list(queries))
     st.code(queries[name],language='sql')
@@ -74,7 +98,7 @@ with tabs[4]:
     st.dataframe(result,width='stretch',hide_index=True)
     st.caption('SQL-запросы работают по всей базе, независимо от фильтров боковой панели.')
 with tabs[5]:
-    st.json(json.loads((RESULTS/'hourly_audit.json').read_text()))
-    st.json(json.loads((RESULTS/'daily_audit.json').read_text()))
+    st.json(json.loads((RESULTS/'hourly_audit.json').read_text(encoding='utf-8')))
+    st.json(json.loads((RESULTS/'daily_audit.json').read_text(encoding='utf-8')))
     st.dataframe(pd.read_csv(RESULTS/'iqr_audit.csv'),hide_index=True)
     st.caption('Выбросы IQR сохранены: всплеск просмотров может быть реальным событием. Пропущенный день не заменяется нулём.')
