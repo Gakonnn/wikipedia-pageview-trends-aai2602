@@ -1,6 +1,5 @@
 """Same group-by on the same filtered rows; fresh processes, 3 repetitions."""
 import json
-import resource
 import sqlite3
 import subprocess
 import sys
@@ -10,6 +9,7 @@ import pyarrow.parquet as pq
 from .config import PROCESSED, RESULTS, DB
 
 def worker(method):
+    import resource  # Unix-only benchmark; other menu actions stay portable.
     start=perf_counter()
     if method=='csv_full':
         frame=pd.read_csv(PROCESSED/'hourly.csv')
