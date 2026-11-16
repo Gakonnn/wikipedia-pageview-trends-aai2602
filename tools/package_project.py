@@ -12,7 +12,7 @@ for p in sorted(ROOT.rglob('*')):
  if relative.parts[0]=='output' and relative.parts[1]!='pdf':continue
  paths.append(p)
 checks={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
-(ROOT/'output/checksums.json').write_text(json.dumps(checks,indent=2))
+(ROOT/'output/checksums.json').write_text(json.dumps(checks,indent=2),encoding='utf-8')
 with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=5) as z:
  for p in paths:z.write(p,'Wikipedia_Trends_AAI-2602/'+str(p.relative_to(ROOT)))
  z.write(ROOT/'output/checksums.json','Wikipedia_Trends_AAI-2602/checksums.json')

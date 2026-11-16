@@ -16,7 +16,7 @@ def build_database():
     temporary.unlink(missing_ok=True)
     con = sqlite3.connect(temporary)
     try:
-        con.executescript((ROOT / 'sql/schema.sql').read_text())
+        con.executescript((ROOT / 'sql/schema.sql').read_text(encoding='utf-8'))
         con.executemany('INSERT INTO languages VALUES (?,?)', LANGUAGES.items())
         con.executemany('INSERT INTO topics VALUES (?,?,?)', TOPICS)
         con.execute('CREATE TABLE staging(language TEXT,access TEXT,title TEXT,views INTEGER)')
@@ -30,7 +30,7 @@ def build_database():
         con.execute('INSERT INTO hourly_views SELECT p.page_id,?,s.access,s.views FROM staging s '
                     'JOIN pages p ON p.language=s.language AND p.title=s.title', (HOUR_END,))
         con.execute('DROP TABLE staging')
-        mappings = json.loads((RAW / 'topic_mapping.json').read_text())
+        mappings = json.loads((RAW / 'topic_mapping.json').read_text(encoding='utf-8'))
         for item in mappings:
             title = item['title'].replace(' ', '_')
             con.execute('INSERT OR IGNORE INTO pages(language,title) VALUES (?,?)',(item['language'],title))
@@ -56,7 +56,7 @@ def build_database():
     return dict(hourly_rows=counts, duplicate_keys=counts-unique)
 
 def load_queries():
-    text = (ROOT / 'sql/queries.sql').read_text()
+    text = (ROOT / 'sql/queries.sql').read_text(encoding='utf-8')
     return {name:sql.strip() for name,sql in re.findall(r'-- name: (\w+)\n(.*?)(?=-- name:|\Z)',text,re.S)}
 
 def run_queries():

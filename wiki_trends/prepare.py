@@ -54,16 +54,16 @@ def prepare_hourly(chunksize=100_000):
     audit['processing_seconds'] = perf_counter() - started
     audit['gzip_bytes'] = source.stat().st_size
     audit['parquet_bytes'] = output.stat().st_size
-    (RESULTS / 'hourly_audit.json').write_text(json.dumps(audit, indent=2))
+    (RESULTS / 'hourly_audit.json').write_text(json.dumps(audit, indent=2),encoding='utf-8')
     return audit
 
 def prepare_daily():
-    mappings = json.loads((RAW / 'topic_mapping.json').read_text())
+    mappings = json.loads((RAW / 'topic_mapping.json').read_text(encoding='utf-8'))
     rows = []
     specs = [(f'daily_total_{lang}.json', lang, '__total__', 'All pages', 'All pages') for lang in LANGUAGES]
     specs += [(f"daily_{x['topic_id']}_{x['language']}.json", x['language'], x['topic_id'], x['topic'], x['category']) for x in mappings]
     for filename, lang, topic_id, topic, category in specs:
-        for item in json.loads((RAW / filename).read_text())['items']:
+        for item in json.loads((RAW / filename).read_text(encoding='utf-8'))['items']:
             rows.append(dict(date=pd.to_datetime(item['timestamp'][:8], format='%Y%m%d'),
                 language=lang, topic_id=topic_id, topic=topic, category=category, views=item['views']))
     df = pd.DataFrame(rows).sort_values(['language','topic_id','date']).reset_index(drop=True)

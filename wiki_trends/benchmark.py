@@ -6,10 +6,19 @@ import sys
 from time import perf_counter
 import pandas as pd
 import pyarrow.parquet as pq
-from .config import PROCESSED, RESULTS, DB
+from .config import ROOT, PROCESSED, RESULTS, DB
+
+def peak_memory_mib():
+    """Peak resident memory of this process on Windows, macOS and Linux."""
+    if sys.platform=='win32':
+        import psutil  # Windows: peak working set (resource module does not exist).
+        return psutil.Process().memory_info().peak_wset/1024**2
+    import resource
+    # ru_maxrss: bytes on macOS, KiB on Linux. Includes interpreter/imports.
+    rss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    return rss/(1024**2 if sys.platform=='darwin' else 1024)
 
 def worker(method):
-    import resource  # Unix-only benchmark; other menu actions stay portable.
     start=perf_counter()
     if method=='csv_full':
         frame=pd.read_csv(PROCESSED/'hourly.csv')
@@ -27,10 +36,7 @@ def worker(method):
     else:
         raise ValueError(method)
     elapsed=perf_counter()-start
-    # ru_maxrss: bytes on macOS, KiB on Linux. Includes interpreter/imports.
-    rss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    mib=rss/(1024**2 if sys.platform=='darwin' else 1024)
-    return dict(method=method,seconds=elapsed,peak_rss_mib=mib,
+    return dict(method=method,seconds=elapsed,peak_rss_mib=peak_memory_mib(),
                 totals={':'.join(k):int(v) for k,v in result.items()})
 
 def benchmark():
@@ -41,7 +47,7 @@ def benchmark():
     rows=[]; expected=None
     for repeat in range(3):
         for method in ['csv_full','parquet_chunks','sqlite']:
-            output=subprocess.check_output([sys.executable,'-m','wiki_trends.benchmark',method],text=True)
+            output=subprocess.check_output([sys.executable,'-m','wiki_trends.benchmark',method],text=True,cwd=ROOT)
             row=json.loads(output)
             totals=row.pop('totals')
             if expected is None: expected=totals
@@ -55,7 +61,8 @@ def benchmark():
     (RESULTS/'storage_benchmark_protocol.json').write_text(json.dumps(dict(
         repetitions=3,aggregation=expected,quality='Exact equality of language/access sums',
         timing='read+groupby only; excludes imports and process startup; uncontrolled OS cache',
-        memory='fresh-process peak RSS including Python and imports',
+        memory='fresh-process peak RSS including Python and imports (Windows: psutil peak working set)',
+        platform=sys.platform,
         size_note='SQLite includes normalized tables, indexes and daily data'),indent=2))
     return summary
 

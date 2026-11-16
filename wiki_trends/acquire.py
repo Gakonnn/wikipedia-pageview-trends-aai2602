@@ -25,7 +25,7 @@ def session():
 
 def fetch(s, url, path):
     manifest_path = RAW / 'manifest.json'
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
     previous = manifest.get(path.name)
     if path.exists() and previous and sha256(path) == previous['sha256']:
         return path
@@ -42,7 +42,7 @@ def fetch(s, url, path):
         raise
     manifest[path.name] = dict(url=url, bytes=path.stat().st_size,
         sha256=sha256(path), retrieved_utc=datetime.now(timezone.utc).isoformat())
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2),encoding='utf-8')
     print('Downloaded:', path.name, path.stat().st_size, flush=True)
     return path
 
@@ -53,12 +53,12 @@ def download_data():
     mappings = []
     for qid, label, category in TOPICS:
         p = fetch(s, f'https://www.wikidata.org/wiki/Special:EntityData/{qid}.json', RAW / f'{qid}.json')
-        entity = json.loads(p.read_text())['entities'][qid]
+        entity = json.loads(p.read_text(encoding='utf-8'))['entities'][qid]
         for lang in LANGUAGES:
             title = entity['sitelinks'][lang + 'wiki']['title']
             mappings.append(dict(topic_id=qid, topic=label, category=category,
                                  language=lang, title=title, revision=entity['lastrevid']))
-    (RAW / 'topic_mapping.json').write_text(json.dumps(mappings, ensure_ascii=False, indent=2))
+    (RAW / 'topic_mapping.json').write_text(json.dumps(mappings, ensure_ascii=False, indent=2),encoding='utf-8')
     base = 'https://wikimedia.org/api/rest_v1/metrics/pageviews'
     for lang in LANGUAGES:
         url = f'{base}/aggregate/{lang}.wikipedia/all-access/user/daily/{START}/{END}'

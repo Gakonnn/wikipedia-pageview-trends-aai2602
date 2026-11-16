@@ -22,5 +22,5 @@ if not healthy():
   if process.poll() is not None:raise RuntimeError('Server exited; inspect qa/dashboard.log')
   time.sleep(.5)
  else:raise RuntimeError('Server did not become healthy')
- (ROOT/'qa/dashboard_server.json').write_text(json.dumps({'pid':process.pid,'url':URL},indent=2))
+ (ROOT/'qa/dashboard_server.json').write_text(json.dumps({'pid':process.pid,'url':URL},indent=2),encoding='utf-8')
 print(URL)
