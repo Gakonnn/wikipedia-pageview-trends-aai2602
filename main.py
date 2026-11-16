@@ -13,10 +13,12 @@ def prepare():
     print('SQL:',run_queries(),flush=True)
 
 def analyze():
-    from wiki_trends.analyze import analyze_data,plot_forecasts
-    from wiki_trends.forecast import compare_forecasts
+    from wiki_trends.analyze import analyze_data,plot_forecasts,sql_insights
+    from wiki_trends.forecast import compare_forecasts,backtest_forecasts
     analyze_data()
+    print('SQL insights:',sql_insights(),flush=True)
     print(compare_forecasts().to_string(index=False),flush=True)
+    print(backtest_forecasts().to_string(index=False),flush=True)
     plot_forecasts()
 
 def menu():

@@ -81,7 +81,7 @@ def analyze_data():
 def plot_forecasts():
     metrics=pd.read_csv(RESULTS / 'forecast_metrics.csv')
     pred=pd.read_csv(RESULTS / 'forecast_predictions.csv',parse_dates=['date'])
-    selected=json.loads((RESULTS / 'forecast_protocol.json').read_text())['selection']
+    selected=json.loads((RESULTS / 'forecast_protocol.json').read_text(encoding='utf-8'))['selection']
     fig,axes=plt.subplots(3,1,figsize=(11,8),sharex=True)
     for ax,lang in zip(axes,['en','ru','kk']):
         g=pred[(pred.language==lang)&(pred.split=='test')&(pred.method==selected[lang])]
@@ -94,3 +94,47 @@ def plot_forecasts():
         g=metrics[(metrics.language==lang)&(metrics.split=='test')]
         ax.bar(g.method,g.mae,color=COLORS[lang]);ax.tick_params(axis='x',labelrotation=65);ax.set_title(lang.upper());ax.set_ylabel('Test MAE, views/day')
     fig.tight_layout();save_figure(fig,'07_mae')
+    backtest=RESULTS / 'forecast_backtest.csv'
+    if backtest.exists():
+        folds=pd.read_csv(backtest)
+        fig,axes=plt.subplots(1,3,figsize=(13,4),sharex=True)
+        for ax,lang in zip(axes,['en','ru','kk']):
+            g=folds[folds.language==lang].pivot(index='fold',columns='method',values='mase')
+            for method in g.columns:
+                ax.plot(g.index,g[method],marker='o',label=method,linewidth=2.2 if method==selected[lang] else 1.2)
+            ax.axhline(1,color='#9AA5B1',linestyle=':',linewidth=1)
+            ax.set_title(lang.upper());ax.set_ylabel('MASE (1 = in-sample seasonal naive)');ax.tick_params(axis='x',labelrotation=45)
+        axes[-1].legend(fontsize=8,loc='upper right')
+        fig.suptitle('Rolling-origin backtest: one fold per month, expanding training window');fig.tight_layout();save_figure(fig,'09_backtest')
+
+def sql_insights():
+    """Load results of the analytical SQL queries into Pandas and summarise them."""
+    from .database import connect, load_queries
+    queries=load_queries()
+    with connect() as con:
+        weekend=pd.read_sql_query(queries['12_weekend_effect'],con)
+        cumulative=pd.read_sql_query(queries['14_cumulative_share'],con,parse_dates=['date'])
+        share=pd.read_sql_query(queries['15_topic_language_share'],con)
+        ranks=pd.read_sql_query(queries['11_topic_monthly_rank'],con)
+    fig,axes=plt.subplots(1,3,figsize=(14,4.4))
+    axes[0].bar(weekend.language.str.upper(),weekend.weekend_to_weekday,color=[COLORS[l] for l in weekend.language])
+    axes[0].axhline(1,color='#323F4B',linestyle=':',linewidth=1)
+    axes[0].set_title('Weekend / weekday mean views');axes[0].set_ylabel('Ratio (SQL 12)')
+    for lang,g in cumulative.groupby('language'):
+        axes[1].plot(g.date,g.cumulative_pct,color=COLORS[lang],label=lang.upper())
+    axes[1].plot([cumulative.date.min(),cumulative.date.max()],[0,100],color='#9AA5B1',linestyle=':',label='Uniform')
+    axes[1].set_title('Cumulative share of annual views');axes[1].set_ylabel('% of 2025 total (SQL 14)');axes[1].legend();axes[1].tick_params(axis='x',labelrotation=45)
+    pivot=share.pivot(index='topic',columns='language',values='views_per_million').reindex(columns=['en','ru','kk'])
+    im=axes[2].imshow(np.log10(pivot.clip(lower=1)),cmap='viridis',aspect='auto')
+    axes[2].set_xticks(range(3),[c.upper() for c in pivot.columns]);axes[2].set_yticks(range(len(pivot)),pivot.index)
+    for i in range(pivot.shape[0]):
+        for j in range(pivot.shape[1]): axes[2].text(j,i,f'{pivot.iloc[i,j]:,.0f}',ha='center',va='center',color='white',fontsize=8)
+    axes[2].set_title('Topic views per million project views');fig.colorbar(im,ax=axes[2],label='log10 (SQL 15)')
+    fig.tight_layout();save_figure(fig,'08_sql_insights')
+    leaders=ranks[ranks.monthly_rank.eq(1)].groupby(['language','topic']).size().rename('months_at_rank_1').reset_index()
+    summary=dict(weekend_to_weekday={r.language:float(r.weekend_to_weekday) for r in weekend.itertuples()},
+        half_year_pct={lang:float(g.loc[g.date.eq('2025-06-30'),'cumulative_pct'].iloc[0]) for lang,g in cumulative.groupby('language')},
+        monthly_leaders=leaders.to_dict('records'),
+        highest_relative_interest={topic:g.sort_values('views_per_million').iloc[-1].language for topic,g in share.groupby('topic')})
+    (RESULTS / 'sql_insights.json').write_text(json.dumps(summary,indent=2,ensure_ascii=False),encoding='utf-8')
+    return summary
