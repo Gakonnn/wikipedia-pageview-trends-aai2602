@@ -39,7 +39,7 @@ with tabs[0]:
     totals['value']=totals.groupby('language').views.transform(lambda x:x/x.iloc[0]*100) if normalize else totals.views
     fig=px.line(totals,x='date',y='value',color='language',labels={'value':'Индекс' if normalize else 'Просмотры','date':'Дата','language':'Язык'})
     st.plotly_chart(fig,width='stretch')
-    monthly=totals.groupby('language').resample('MS',on='date').views.sum().reset_index()
+    monthly=totals.groupby(['language',pd.Grouper(key='date',freq='MS')]).views.sum().reset_index()
     st.plotly_chart(px.bar(monthly,x='date',y='views',color='language',barmode='group',title='Суммы по месяцам внутри выбранного периода'),width='stretch')
 with tabs[1]:
     topics=filtered[filtered.topic_id.ne('__total__')].copy()

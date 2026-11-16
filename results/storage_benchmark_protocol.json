@@ -1,0 +1,15 @@
+{
+  "repetitions": 3,
+  "aggregation": {
+    "en:desktop": 3166735,
+    "en:mobile": 5008148,
+    "kk:desktop": 2436,
+    "kk:mobile": 7796,
+    "ru:desktop": 398254,
+    "ru:mobile": 781805
+  },
+  "quality": "Exact equality of language/access sums",
+  "timing": "read+groupby only; excludes imports and process startup; uncontrolled OS cache",
+  "memory": "fresh-process peak RSS including Python and imports",
+  "size_note": "SQLite includes normalized tables, indexes and daily data"
+}

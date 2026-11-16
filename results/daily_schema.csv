@@ -1,0 +1,7 @@
+column,dtype,missing
+date,datetime64[ns],0
+language,object,0
+topic_id,object,0
+topic,object,0
+category,object,0
+views,int64,0

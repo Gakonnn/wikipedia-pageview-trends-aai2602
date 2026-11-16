@@ -16,7 +16,7 @@ TOPICS = [
     ('Q1520', 'Astana', 'Cities'),
     ('Q11660', 'Artificial intelligence', 'Technology'),
     ('Q28865', 'Python', 'Technology'),
-    ('Q2539', 'Machine learning', 'Technology'),
+    ('Q75', 'Internet', 'Technology'),
 ]
 START, END = '2025010100', '2025123100'
 USER_AGENT = 'WikipediaTrendsStudentProject/1.0 (educational reproducible analysis)'

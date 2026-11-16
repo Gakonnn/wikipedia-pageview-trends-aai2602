@@ -69,7 +69,7 @@ def analyze_data():
     fig,axes=plt.subplots(1,3,figsize=(13,5))
     for ax,lang in zip(axes,['en','ru','kk']):
         g=topic[topic.language.eq(lang)].sort_values('views')
-        ax.barh(g.topic,g.views,color=COLORS[lang]);ax.set_title(lang.upper());ax.set_xlabel('Views in 2025')
+        ax.barh(g.topic,g.views,color=COLORS[lang]);ax.set_title(lang.upper());ax.set_xlabel('Views in 2025');ax.ticklabel_format(axis='x',style='sci',scilimits=(0,0))
     fig.tight_layout();save_figure(fig,'05_topic_totals')
     hourly_summary=hour.to_dict('records')
     (RESULTS / 'analysis_summary.json').write_text(json.dumps(dict(

@@ -1,0 +1,7 @@
+Topic 6: Wikipedia Pageview Trends
+Track topic popularity in Kazakh, Russian, and English Wikipedia.
+Dataset: https://dumps.wikimedia.org/other/pageviews/
+Full Name and Group:
+Tugelbayev Galymzhan, AAI-2602; Dias Ilyas, AAI-2602; Zhasulan Aidos, AAI-2602
+
+Copy this text into the instructor's topic table. Registration has not been submitted automatically.

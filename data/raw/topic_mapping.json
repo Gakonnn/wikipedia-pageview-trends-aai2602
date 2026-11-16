@@ -1,0 +1,146 @@
+[
+  {
+    "topic_id": "Q232",
+    "topic": "Kazakhstan",
+    "category": "Geography",
+    "language": "kk",
+    "title": "Қазақстан",
+    "revision": 2568797681
+  },
+  {
+    "topic_id": "Q232",
+    "topic": "Kazakhstan",
+    "category": "Geography",
+    "language": "ru",
+    "title": "Казахстан",
+    "revision": 2568797681
+  },
+  {
+    "topic_id": "Q232",
+    "topic": "Kazakhstan",
+    "category": "Geography",
+    "language": "en",
+    "title": "Kazakhstan",
+    "revision": 2568797681
+  },
+  {
+    "topic_id": "Q35493",
+    "topic": "Almaty",
+    "category": "Cities",
+    "language": "kk",
+    "title": "Алматы",
+    "revision": 2570061111
+  },
+  {
+    "topic_id": "Q35493",
+    "topic": "Almaty",
+    "category": "Cities",
+    "language": "ru",
+    "title": "Алма-Ата",
+    "revision": 2570061111
+  },
+  {
+    "topic_id": "Q35493",
+    "topic": "Almaty",
+    "category": "Cities",
+    "language": "en",
+    "title": "Almaty",
+    "revision": 2570061111
+  },
+  {
+    "topic_id": "Q1520",
+    "topic": "Astana",
+    "category": "Cities",
+    "language": "kk",
+    "title": "Астана",
+    "revision": 2568008907
+  },
+  {
+    "topic_id": "Q1520",
+    "topic": "Astana",
+    "category": "Cities",
+    "language": "ru",
+    "title": "Астана",
+    "revision": 2568008907
+  },
+  {
+    "topic_id": "Q1520",
+    "topic": "Astana",
+    "category": "Cities",
+    "language": "en",
+    "title": "Astana",
+    "revision": 2568008907
+  },
+  {
+    "topic_id": "Q11660",
+    "topic": "Artificial intelligence",
+    "category": "Technology",
+    "language": "kk",
+    "title": "Жасанды интеллект",
+    "revision": 2569958782
+  },
+  {
+    "topic_id": "Q11660",
+    "topic": "Artificial intelligence",
+    "category": "Technology",
+    "language": "ru",
+    "title": "Искусственный интеллект",
+    "revision": 2569958782
+  },
+  {
+    "topic_id": "Q11660",
+    "topic": "Artificial intelligence",
+    "category": "Technology",
+    "language": "en",
+    "title": "Artificial intelligence",
+    "revision": 2569958782
+  },
+  {
+    "topic_id": "Q28865",
+    "topic": "Python",
+    "category": "Technology",
+    "language": "kk",
+    "title": "Python",
+    "revision": 2566877611
+  },
+  {
+    "topic_id": "Q28865",
+    "topic": "Python",
+    "category": "Technology",
+    "language": "ru",
+    "title": "Python",
+    "revision": 2566877611
+  },
+  {
+    "topic_id": "Q28865",
+    "topic": "Python",
+    "category": "Technology",
+    "language": "en",
+    "title": "Python (programming language)",
+    "revision": 2566877611
+  },
+  {
+    "topic_id": "Q75",
+    "topic": "Internet",
+    "category": "Technology",
+    "language": "kk",
+    "title": "Интернет",
+    "revision": 2569910154
+  },
+  {
+    "topic_id": "Q75",
+    "topic": "Internet",
+    "category": "Technology",
+    "language": "ru",
+    "title": "Интернет",
+    "revision": 2569910154
+  },
+  {
+    "topic_id": "Q75",
+    "topic": "Internet",
+    "category": "Technology",
+    "language": "en",
+    "title": "Internet",
+    "revision": 2569910154
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "annual_views": {
+    "en": 85533107174,
+    "kk": 70799658,
+    "ru": 9312282906
+  },
+  "mean_daily": {
+    "en": 234337279.9287671,
+    "kk": 193971.66575342466,
+    "ru": 25513103.852054793
+  },
+  "hourly": [
+    {
+      "language": "en",
+      "access": "desktop",
+      "records": 1196659,
+      "views": 3166735
+    },
+    {
+      "language": "en",
+      "access": "mobile",
+      "records": 1093747,
+      "views": 5008148
+    },
+    {
+      "language": "kk",
+      "access": "desktop",
+      "records": 1774,
+      "views": 2436
+    },
+    {
+      "language": "kk",
+      "access": "mobile",
+      "records": 4292,
+      "views": 7796
+    },
+    {
+      "language": "ru",
+      "access": "desktop",
+      "records": 182643,
+      "views": 398254
+    },
+    {
+      "language": "ru",
+      "access": "mobile",
+      "records": 243893,
+      "views": 781805
+    }
+  ],
+  "top_topics": [
+    {
+      "language": "en",
+      "topic": "Artificial intelligence",
+      "views": 3895334
+    },
+    {
+      "language": "kk",
+      "topic": "Kazakhstan",
+      "views": 110796
+    },
+    {
+      "language": "ru",
+      "topic": "Kazakhstan",
+      "views": 1245978
+    }
+  ],
+  "interpretation": "IQR flags retained; correlation is descriptive, not causal; language is not country"
+}
