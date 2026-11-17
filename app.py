@@ -77,6 +77,41 @@ with tabs[3]:
     st.plotly_chart(px.line(lines,x='date',y='value',color='series',markers=True,
         labels={'value':'Просмотры/день','date':'Дата','series':'Ряд'},
         title=f'{forecast_lang.upper()}: прогноз на день вперёд ({split}); выбран по validation: {selection[forecast_lang]}'),width='stretch')
+    
+    if not shown.empty:
+        residuals = shown.copy()
+        residuals["error"] = residuals["actual"] - residuals["predicted"]
+
+        fig_errors = px.bar(
+            residuals,
+            x="date",
+            y="error",
+            color="method",
+            barmode="group",
+            title="Ошибки прогнозирования по датам",
+            labels={
+                "date": "Дата",
+                "error": "Фактические − предсказанные просмотры",
+                "method": "Модель"
+            }
+        )
+
+        fig_errors.add_hline(y=0, line_dash="dash")
+
+        st.plotly_chart(fig_errors, width="stretch")
+
+        st.caption(
+            "Положительная ошибка означает, что модель "
+            "недооценила просмотры. Отрицательная — переоценила."
+        )
+
+        st.download_button(
+            "Скачать ошибки прогнозирования",
+            residuals.to_csv(index=False).encode("utf-8-sig"),
+            "forecast_residuals.csv",
+            "text/csv"
+        )
+
     table=metrics[(metrics.language==forecast_lang)&(metrics.split==split)][['method','mae','rmse','mape','mase','seconds','selected_on_validation']]
     st.dataframe(table.sort_values('mae'),width='stretch',hide_index=True)
     st.info('Каждый прогноз на один день вперёд использует известные предыдущие дни. Это не прогноз всего декабря из одной точки. MASE < 1 означает лучше, чем недельный naive на обучающих данных.')
